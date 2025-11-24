@@ -23,10 +23,6 @@
           <span>Questionnaire de satisfaction</span>
         </div>
       </div>
-      <nav class="main-nav">
-        <a href="index.html" class="nav-link nav-link-active">Questionnaire</a>
-        <a href="photos.html" class="nav-link">Photos</a>
-      </nav>
     </div>
   </header>
 
@@ -43,7 +39,7 @@
       <form
         id="surveyForm"
         novalidate
-        action="https://script.google.com/macros/s/AKfycbxArpPa4Ib1AHs3Bf7D-y3ww70aX-RJxiVkka9vTZhscnph2tMwGOOxL6gVjhRSqfte/exec"
+        action="https://script.google.com/macros/s/AKfycbyKgToUKzTLVcOclzdDYde37kdrP4rEwqYf3boz20fJmwS_ALIc5QPy9idqhuonbzZ2/exec"
         method="POST"
       >
         <!-- Satisfaction globale -->
@@ -51,7 +47,7 @@
           <legend>
             Quelle est votre satisfaction globale ? <span class="required">*</span>
           </legend>
-          <p class="hint">1 étoile = très insatisfait, 5 étoiles = très satisfait.</p>
+          <p class="hint">1 étoile = insatisfait, 5 étoiles = très satisfait.</p>
           <div class="stars" data-required="true">
             <!-- 1 à gauche, 5 à droite -->
             <input type="radio" name="rating_global" id="rating_global_1" value="1">
@@ -185,7 +181,7 @@
             Une erreur est survenue lors de l’envoi. Merci de réessayer plus tard.
           </div>
           <p class="small">
-            Vos réponses sont utilisées uniquement par Racine Coiffure pour améliorer nos services.
+            Vos réponses sont utilisées uniquement par Manon Jacquin dans le cadre de son stage.
           </p>
         </div>
       </form>
@@ -194,7 +190,6 @@
 
   <footer>
     <span>© <span id="year"></span> Racine Coiffure – Tous droits réservés.</span>
-    <span>Questionnaire de satisfaction</span>
   </footer>
 
   <script src="app.js"></script>
