@@ -56,14 +56,12 @@ document.querySelectorAll(".yesno-group").forEach((group) => {
   });
 });
 
-// === Gestion du formulaire + iframe cachée ===
+// === Gestion du formulaire (validation, envoi classique) ===
 const form = document.getElementById("surveyForm");
 const successEl = document.getElementById("formSuccess");
 const formErrorEl = document.getElementById("formError");
-const hiddenIframe = document.getElementById("hidden_iframe");
 
 if (form) {
-  // Validation côté client avant envoi
   form.addEventListener("submit", (event) => {
     if (formErrorEl) formErrorEl.classList.remove("visible");
     if (successEl) successEl.classList.remove("visible");
@@ -83,66 +81,38 @@ if (form) {
       globalError.classList.remove("visible");
     }
 
-    // Si erreur, on bloque l'envoi vers Apps Script
+    // Si erreur, on bloque l'envoi
     if (hasError) {
       event.preventDefault();
       return;
     }
 
-    // Si pas d'erreur :
-    // on ne fait PAS preventDefault :
-    // le formulaire est envoyé vers Apps Script
-    // dans l'iframe cachée (target="hidden_iframe").
+    // Sinon, on laisse le navigateur envoyer le formulaire
+    // vers Apps Script (pas de preventDefault ici).
   });
 }
 
-// Détection de fin d'envoi via l'iframe cachée
-if (hiddenIframe && form) {
-  let firstLoad = true;
+// === Affichage du message de succès si ?sent=1 dans l'URL ===
+if (successEl) {
+  const params = new URLSearchParams(window.location.search);
+  if (params.get("sent") === "1") {
+    successEl.classList.add("visible");
+    window.scrollTo({ top: 0, behavior: "smooth" });
 
-  hiddenIframe.addEventListener("load", () => {
-    // Le premier chargement de l'iframe au load de la page : on ignore
-    if (firstLoad) {
-      firstLoad = false;
-      return;
+    // On enlève le paramètre de l'URL pour éviter de le garder si on rafraîchit
+    if (window.history && window.history.replaceState) {
+      const newUrl = window.location.origin + window.location.pathname;
+      window.history.replaceState({}, "", newUrl);
     }
-
-    // À partir du 2e load : un envoi vient d'être fait
-    // => on affiche le message de succès côté site
-    if (successEl) {
-      successEl.classList.add("visible");
-      setTimeout(() => {
-        successEl.classList.remove("visible");
-      }, 4000);
-    }
-
-    // On peut remettre le formulaire à zéro
-    form.reset();
-
-    // Réinitialiser les étoiles
-    document
-      .querySelectorAll(".stars label")
-      .forEach((l) => l.classList.remove("selected", "hovered"));
-
-    // Réinitialiser les boutons Oui / Non
-    document
-      .querySelectorAll(".yesno-option")
-      .forEach((opt) => opt.classList.remove("active"));
-  });  
+  }
 }
 
 // Bouton retour après succès
 const successBtn = document.getElementById("successBtn");
 
-if (successBtn) {
+if (successBtn && successEl) {
   successBtn.addEventListener("click", () => {
-    // Remet la page en haut
     window.scrollTo({ top: 0, behavior: "smooth" });
-
-    // Cache le message de succès après le clic
-    if (successEl) successEl.classList.remove("visible");
-
-    // Le formulaire est déjà reset automatiquement
+    successEl.classList.remove("visible");
   });
 }
-
