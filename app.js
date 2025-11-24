@@ -1,10 +1,10 @@
-// Mise à jour de l'année dans le footer
+// === Mise à jour de l'année dans le footer ===
 const yearEl = document.getElementById("year");
 if (yearEl) {
   yearEl.textContent = new Date().getFullYear();
 }
 
-// Gestion des groupes d'étoiles (1 à gauche, 5 à droite)
+// === Gestion des groupes d'étoiles (1 à gauche, 5 à droite) ===
 document.querySelectorAll(".stars").forEach((starsGroup) => {
   const labels = Array.from(starsGroup.querySelectorAll("label"));
   const inputName = starsGroup.querySelector("input")?.name;
@@ -41,7 +41,7 @@ document.querySelectorAll(".stars").forEach((starsGroup) => {
   });
 });
 
-// Gestion visuelle des boutons Oui / Non
+// === Gestion visuelle des boutons Oui / Non ===
 document.querySelectorAll(".yesno-group").forEach((group) => {
   const options = group.querySelectorAll(".yesno-option");
   options.forEach((opt) => {
@@ -56,16 +56,13 @@ document.querySelectorAll(".yesno-group").forEach((group) => {
   });
 });
 
-// Gestion de l'envoi du formulaire (validation côté client, envoi classique vers Apps Script)
+// === Gestion du formulaire (validation) ===
 const form = document.getElementById("surveyForm");
-const successEl = document.getElementById("formSuccess");
 const formErrorEl = document.getElementById("formError");
 
 if (form) {
   form.addEventListener("submit", (event) => {
-    // On cache d'éventuels anciens messages
     if (formErrorEl) formErrorEl.classList.remove("visible");
-    if (successEl) successEl.classList.remove("visible");
 
     let hasError = false;
 
@@ -82,15 +79,13 @@ if (form) {
       globalError.classList.remove("visible");
     }
 
-    // Si erreur, on bloque l'envoi vers Apps Script
+    // Si erreur, on bloque l'envoi
     if (hasError) {
       event.preventDefault();
       return;
     }
 
-    // Si pas d'erreur :
-    // NE PAS appeler preventDefault :
-    // on laisse le navigateur envoyer le formulaire
-    // vers l'URL indiquée dans l'attribut action du <form>.
+    // Sinon, on laisse le formulaire partir vers Apps Script
+    // Apps Script s’occupe de la redirection vers remerciement.html
   });
 }
