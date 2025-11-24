@@ -56,15 +56,13 @@ document.querySelectorAll(".yesno-group").forEach((group) => {
   });
 });
 
-// === Gestion du formulaire (validation, envoi classique) ===
+// === Gestion du formulaire (validation) ===
 const form = document.getElementById("surveyForm");
-const successEl = document.getElementById("formSuccess");
 const formErrorEl = document.getElementById("formError");
 
 if (form) {
   form.addEventListener("submit", (event) => {
     if (formErrorEl) formErrorEl.classList.remove("visible");
-    if (successEl) successEl.classList.remove("visible");
 
     let hasError = false;
 
@@ -87,32 +85,7 @@ if (form) {
       return;
     }
 
-    // Sinon, on laisse le navigateur envoyer le formulaire
-    // vers Apps Script (pas de preventDefault ici).
-  });
-}
-
-// === Affichage du message de succès si ?sent=1 dans l'URL ===
-if (successEl) {
-  const params = new URLSearchParams(window.location.search);
-  if (params.get("sent") === "1") {
-    successEl.classList.add("visible");
-    window.scrollTo({ top: 0, behavior: "smooth" });
-
-    // On enlève le paramètre de l'URL pour éviter de le garder si on rafraîchit
-    if (window.history && window.history.replaceState) {
-      const newUrl = window.location.origin + window.location.pathname;
-      window.history.replaceState({}, "", newUrl);
-    }
-  }
-}
-
-// Bouton retour après succès
-const successBtn = document.getElementById("successBtn");
-
-if (successBtn && successEl) {
-  successBtn.addEventListener("click", () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-    successEl.classList.remove("visible");
+    // Sinon, on laisse le formulaire partir vers Apps Script
+    // Apps Script s’occupe de la redirection vers remerciement.html
   });
 }
