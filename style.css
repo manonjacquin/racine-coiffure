@@ -1,0 +1,490 @@
+:root {
+  --primary: #c2875b;
+  --primary-dark: #9e6a43;
+  --bg: #f7f2ee;
+  --text: #222222;
+  --muted: #777777;
+  --radius-lg: 1.25rem;
+  --shadow-soft: 0 10px 30px rgba(0,0,0,0.08);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.5;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Header */
+header {
+  background: #ffffff;
+  box-shadow: 0 1px 10px rgba(0,0,0,0.03);
+}
+
+.header-inner {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 0.75rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.logo-mark {
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+  background: radial-gradient(circle at 20% 20%, #f5e8dc, #c2875b);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  color: #2b211a;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  font-size: 0.95rem;
+}
+
+.logo-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.logo-text span:first-child {
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+}
+
+.logo-text span:last-child {
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+.main-nav {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.nav-link {
+  font-size: 0.85rem;
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  background: transparent;
+  transition: background 0.1s ease, border-color 0.1s ease, color 0.1s ease;
+  white-space: nowrap;
+}
+
+.nav-link:hover {
+  background: #f3ebe4;
+  border-color: #e2d5ca;
+}
+
+.nav-link-active {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #ffffff;
+}
+
+/* Bouton principal */
+.btn-primary {
+  background: var(--primary);
+  border: none;
+  color: white;
+  font-size: 0.85rem;
+  padding: 0.5rem 0.9rem;
+  border-radius: 999px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.18);
+  transition: transform 0.1s ease, box-shadow 0.1s ease, background 0.1s ease;
+  white-space: nowrap;
+}
+
+.btn-primary:hover {
+  background: var(--primary-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 14px 24px rgba(0,0,0,0.2);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.18);
+}
+
+/* Layout global */
+main {
+  max-width: 1080px;
+  margin: 1.25rem auto 2.5rem auto;
+  padding: 0 1rem;
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  gap: 2rem;
+}
+
+/* Sur mobile : une seule colonne, questionnaire en premier */
+@media (max-width: 900px) {
+  main {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.5rem;
+  }
+
+  .card {
+    order: 1;
+  }
+
+  .hero {
+    order: 2;
+  }
+
+  .header-inner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 600px) {
+  .header-inner {
+    align-items: center;
+    text-align: center;
+  }
+
+  .logo {
+    justify-content: center;
+  }
+
+  .main-nav {
+    width: 100%;
+    justify-content: center;
+  }
+
+  main {
+    margin-top: 1rem;
+  }
+}
+
+/* Section questionnaire / carte */
+.card {
+  background: #ffffff;
+  border-radius: 1.25rem;
+  padding: 1.25rem 1.1rem;
+  box-shadow: var(--shadow-soft);
+  border: 1px solid rgba(0,0,0,0.03);
+}
+
+@media (min-width: 901px) {
+  .card {
+    padding: 1.5rem 1.4rem;
+  }
+}
+
+.card-header {
+  margin-bottom: 1rem;
+}
+
+.card-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.card-subtitle {
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin-top: 0.3rem;
+}
+
+/* Formulaire */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+fieldset {
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
+legend {
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin-bottom: 0.25rem;
+}
+
+.hint {
+  font-size: 0.75rem;
+  color: var(--muted);
+  margin-bottom: 0.4rem;
+}
+
+/* Étoiles */
+.stars {
+  display: inline-flex;
+  gap: 0.3rem;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.stars input {
+  display: none;
+}
+.stars label {
+  filter: grayscale(0.8);
+  transition: transform 0.1s ease, filter 0.1s ease;
+}
+
+/* Étoiles actives (clic) ou en survol (JS) */
+.stars label.selected,
+.stars label.hovered {
+  filter: grayscale(0);
+  transform: translateY(-1px) scale(1.05);
+}
+
+
+/* Oui / Non */
+.yesno-group {
+  display: inline-flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.yesno-option {
+  border-radius: 999px;
+  border: 1px solid #e1d5ca;
+  padding: 0.3rem 0.8rem;
+  font-size: 0.85rem;
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  background: #faf6f2;
+  transition: background 0.1s ease, border-color 0.1s ease, transform 0.1s ease;
+}
+
+.yesno-option input {
+  display: none;
+}
+
+.yesno-option.active {
+  background: #f0e2d6;
+  border-color: var(--primary);
+  transform: translateY(-1px);
+}
+
+/* Champ commentaires */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  font-size: 0.85rem;
+}
+
+.form-group label {
+  font-weight: 500;
+}
+
+textarea {
+  border-radius: 0.8rem;
+  border: 1px solid #e1d5ca;
+  padding: 0.55rem 0.7rem;
+  font-family: inherit;
+  font-size: 0.85rem;
+  outline: none;
+  background: #fbf7f3;
+  transition: border-color 0.1s ease, box-shadow 0.1s ease, background 0.1s ease;
+  min-height: 90px;
+  resize: vertical;
+}
+
+textarea:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 1.5px rgba(194,135,91,0.25);
+  background: #ffffff;
+}
+
+.required {
+  color: #c0392b;
+}
+
+/* Pied du formulaire */
+.form-footer {
+  margin-top: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+@media (max-width: 600px) {
+  .form-footer {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+.small {
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+.success {
+  font-size: 0.8rem;
+  color: #1b8a4c;
+  display: none;
+}
+
+.success.visible {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.error-inline {
+  display: none;
+  font-size: 0.75rem;
+  color: #c0392b;
+  margin-top: 0.15rem;
+}
+
+.error-inline.visible {
+  display: block;
+}
+
+/* Section hero (à côté du questionnaire) */
+.hero {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.hero-title {
+  font-size: clamp(1.3rem, 3.5vw, 1.9rem);
+  font-weight: 600;
+}
+
+.hero-subtitle {
+  font-size: 0.9rem;
+  color: var(--muted);
+  max-width: 32rem;
+}
+
+.hero-photo-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 0.5rem;
+  align-items: stretch;
+}
+
+.hero-photo-grid img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-soft);
+}
+
+@media (max-width: 600px) {
+  .hero-photo-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-photo-grid img:first-child {
+    height: 220px;
+  }
+
+  .hero-photo-grid img:last-child {
+    height: 160px;
+  }
+}
+
+.hero-note {
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+/* Page photos */
+.main-photos {
+  max-width: 1080px;
+  margin: 1.25rem auto 2.5rem auto;
+  padding: 0 1rem;
+}
+
+.card-photos {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.photo-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+@media (max-width: 700px) {
+  .photo-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.photo-item {
+  border-radius: 1rem;
+  overflow: hidden;
+  background: #faf6f2;
+  box-shadow: var(--shadow-soft);
+  display: flex;
+  flex-direction: column;
+}
+
+.photo-item img {
+  width: 100%;
+  height: 210px;
+  object-fit: cover;
+}
+
+.photo-item figcaption {
+  padding: 0.6rem 0.8rem;
+  font-size: 0.85rem;
+  color: #4b3a2e;
+}
+
+.photo-note {
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+/* Footer */
+footer {
+  max-width: 1080px;
+  margin: 0 auto 2rem auto;
+  padding: 0 1rem;
+  font-size: 0.75rem;
+  color: var(--muted);
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
