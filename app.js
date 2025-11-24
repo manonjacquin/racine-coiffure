@@ -66,26 +66,55 @@ if (form) {
 
     let hasError = false;
 
-    // Satisfaction globale obligatoire
-    const globalRating = form.querySelector('input[name="rating_global"]:checked');
-    const globalError = document.querySelector(
-      '.error-inline[data-error-for="rating_global"]'
-    );
+    // ⭐ Questions étoiles obligatoires
+    const requiredStars = [
+      "rating_global",
+      "rating_ambiance",
+      "rating_accueil"
+    ];
 
-    if (!globalRating) {
-      if (globalError) globalError.classList.add("visible");
-      hasError = true;
-    } else if (globalError) {
-      globalError.classList.remove("visible");
-    }
+    requiredStars.forEach((name) => {
+      const selected = form.querySelector(`input[name="${name}"]:checked`);
+      const errorEl = document.querySelector(
+        `.error-inline[data-error-for="${name}"]`
+      );
 
-    // Si erreur, on bloque l'envoi
+      if (!selected) {
+        hasError = true;
+        if (errorEl) errorEl.classList.add("visible");
+      } else {
+        if (errorEl) errorEl.classList.remove("visible");
+      }
+    });
+
+    // 👍 Groupes OUI / NON obligatoires
+    const requiredYesNo = [
+      "produits_ok",
+      "prise_rdv_ok",
+      "revenir"
+    ];
+
+    requiredYesNo.forEach((name) => {
+      const selected = form.querySelector(`input[name="${name}"]:checked`);
+      const errorEl = document.querySelector(
+        `.error-inline[data-error-for="${name}"]`
+      );
+
+      if (!selected) {
+        hasError = true;
+        if (errorEl) errorEl.classList.add("visible");
+      } else {
+        if (errorEl) errorEl.classList.remove("visible");
+      }
+    });
+
+    // ❗ Blocage de l’envoi si erreur
     if (hasError) {
       event.preventDefault();
       return;
     }
 
-    // Sinon, on laisse le formulaire partir vers Apps Script
-    // Apps Script s’occupe de la redirection vers remerciement.html
+    // Sinon → envoi vers Apps Script
   });
 }
+
