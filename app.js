@@ -1,10 +1,10 @@
-// Mise à jour de l'année dans le footer
+// === Mise à jour de l'année dans le footer ===
 const yearEl = document.getElementById("year");
 if (yearEl) {
   yearEl.textContent = new Date().getFullYear();
 }
 
-// Gestion des groupes d'étoiles (1 à gauche, 5 à droite)
+// === Gestion des groupes d'étoiles (1 à gauche, 5 à droite) ===
 document.querySelectorAll(".stars").forEach((starsGroup) => {
   const labels = Array.from(starsGroup.querySelectorAll("label"));
   const inputName = starsGroup.querySelector("input")?.name;
@@ -41,7 +41,7 @@ document.querySelectorAll(".stars").forEach((starsGroup) => {
   });
 });
 
-// Gestion visuelle des boutons Oui / Non
+// === Gestion visuelle des boutons Oui / Non ===
 document.querySelectorAll(".yesno-group").forEach((group) => {
   const options = group.querySelectorAll(".yesno-option");
   options.forEach((opt) => {
@@ -56,14 +56,15 @@ document.querySelectorAll(".yesno-group").forEach((group) => {
   });
 });
 
-// Gestion de l'envoi du formulaire (validation côté client, envoi classique vers Apps Script)
+// === Gestion du formulaire + iframe cachée ===
 const form = document.getElementById("surveyForm");
 const successEl = document.getElementById("formSuccess");
 const formErrorEl = document.getElementById("formError");
+const hiddenIframe = document.getElementById("hidden_iframe");
 
 if (form) {
+  // Validation côté client avant envoi
   form.addEventListener("submit", (event) => {
-    // On cache d'éventuels anciens messages
     if (formErrorEl) formErrorEl.classList.remove("visible");
     if (successEl) successEl.classList.remove("visible");
 
@@ -89,8 +90,59 @@ if (form) {
     }
 
     // Si pas d'erreur :
-    // NE PAS appeler preventDefault :
-    // on laisse le navigateur envoyer le formulaire
-    // vers l'URL indiquée dans l'attribut action du <form>.
+    // on ne fait PAS preventDefault :
+    // le formulaire est envoyé vers Apps Script
+    // dans l'iframe cachée (target="hidden_iframe").
   });
 }
+
+// Détection de fin d'envoi via l'iframe cachée
+if (hiddenIframe && form) {
+  let firstLoad = true;
+
+  hiddenIframe.addEventListener("load", () => {
+    // Le premier chargement de l'iframe au load de la page : on ignore
+    if (firstLoad) {
+      firstLoad = false;
+      return;
+    }
+
+    // À partir du 2e load : un envoi vient d'être fait
+    // => on affiche le message de succès côté site
+    if (successEl) {
+      successEl.classList.add("visible");
+      setTimeout(() => {
+        successEl.classList.remove("visible");
+      }, 4000);
+    }
+
+    // On peut remettre le formulaire à zéro
+    form.reset();
+
+    // Réinitialiser les étoiles
+    document
+      .querySelectorAll(".stars label")
+      .forEach((l) => l.classList.remove("selected", "hovered"));
+
+    // Réinitialiser les boutons Oui / Non
+    document
+      .querySelectorAll(".yesno-option")
+      .forEach((opt) => opt.classList.remove("active"));
+  });  
+}
+
+// Bouton retour après succès
+const successBtn = document.getElementById("successBtn");
+
+if (successBtn) {
+  successBtn.addEventListener("click", () => {
+    // Remet la page en haut
+    window.scrollTo({ top: 0, behavior: "smooth" });
+
+    // Cache le message de succès après le clic
+    if (successEl) successEl.classList.remove("visible");
+
+    // Le formulaire est déjà reset automatiquement
+  });
+}
+
