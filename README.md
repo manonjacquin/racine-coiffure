@@ -1,2 +1,2 @@
-# racine-coiffure
-Project Racine Coiffure
+# Stage de Manon
+Project Stage de Manon
